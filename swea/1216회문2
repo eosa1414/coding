@@ -1,0 +1,118 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+ 
+class Solution {
+ 
+    public static void main(String[] args) throws IOException {
+         
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+         
+         
+        for(int test_case = 1; test_case <= 10; test_case++) {
+             
+            int T = Integer.parseInt(br.readLine()); //테스트 번호
+             
+            int N = 100;
+             
+            //배열 생성
+            char[][] chrs = new char[N][N];
+            for(int r = 0; r < N; r++) {
+                String chr = br.readLine();
+                for(int c = 0; c < N; c++) {
+                    chrs[r][c] = chr.charAt(c);
+                }
+            }
+             
+         
+            int max = 1; //회문이 최소 하나는 있다(알파벳 하나)
+            int cnt;
+             
+                    for(int r = 0; r < N ; r++) {
+                        for(int c = 0; c < N ; c++) {//행열 100줄을 체크해야 한다
+                             
+                            //세로 홀수 회문
+                            cnt = 0;
+                            for(int i = 0; i <= N / 2; i++){//각 행열에 대해 최대 50번까지 검사를 하는데
+                                if(r - i >= 0 && r + i < N) {//범위를 벗어나지 않는다면
+                                     
+                                    if(chrs[r-i][c] != chrs[r+i][c]) {//만약 값이 다르다면
+                                        break; //빠져나온다
+                                    }else {//같다면
+                                        cnt++;
+                                        if(max < 2 * cnt - 1) {
+                                            max = 2 * cnt - 1;
+                                        }
+                                    }
+                                     
+                                }
+                            }
+                             
+                            //세로 짝수 회문
+                            cnt = 0;
+                            for(int i = 1; i <= N / 2; i++){
+                                //왼쪽과 오른쪽을 체크한다                         
+                                if( r - i >= 0 && r + i < N && r - i + 1 < N ) {
+                                     
+                                    if(chrs[r - i + 1][c] != chrs[r+i][c]) {
+                                        break;
+                                    }else {
+                                        cnt++;
+                                        if(max < 2 * cnt) {
+                                            max = 2 * cnt;
+                                        }
+                                    }
+                                     
+                                }
+                            }
+                             
+                             
+                            //가로 홀수 회문
+                            cnt = 0;
+                            for(int i = 0; i <= N / 2; i++){
+                                if(c - i >= 0 && c + i <N) {
+                                     
+                                    if(chrs[r][c-i] != chrs[r][c+i]) {
+                                        break;
+                                    }else {
+                                        cnt++;
+                                        if(max < 2 * cnt - 1) {
+                                            max = 2 * cnt - 1;
+                                        }
+                                    }
+                                     
+                                }
+                            }
+                             
+                            //가로 짝수 회문
+                            cnt = 0;
+                            for(int i = 1; i <= N / 2; i++){
+                                if(c - i >= 0 && c + i <N && c - i + 1 < N) {
+ 
+                                    if(chrs[r][c - i + 1] != chrs[r][c+i]) {
+                                        break;
+                                    }else {
+                                        cnt++;
+                                        if(max < 2 * cnt) {
+                                            max = 2 * cnt;
+                                        }
+                                    }
+                                     
+                                }
+                            }
+                                 
+                             
+                         
+                        }
+                    }
+             
+            //출력
+            System.out.printf("#%d %d\n", T, max);
+             
+        }
+         
+        br.close();
+    }
+ 
+}
