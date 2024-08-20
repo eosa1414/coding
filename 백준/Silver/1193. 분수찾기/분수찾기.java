@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
 
@@ -11,35 +10,23 @@ public class Main {
 		
 		int leftNum = 1;
 		int rightNum = 1;
-		int Xtimes = 1;
-		int cnt = 0;
-		final int right = 0;
-		final int down = 1;
-		int direction = right;
+		int Xtimes = 0;
 		
 		//1이면 아무것도 하지 않고 그대로 출력한다, 2부터 시작한다
 		for(int i = 1; i < X; i++) {
-			if(cnt == 0) {
-				if(direction == right) {
+			if(leftNum == 1 && rightNum % 2 != 0) {
 					rightNum++;
-					direction = down;
-				}else {
+					Xtimes++;
+			}else if(rightNum == 1 && leftNum % 2 == 0) {
 					leftNum++;
-					direction = right;
-				}
-				cnt = Xtimes;
-				Xtimes++;
-			}else{
-				if(direction == down) {
-					leftNum++;
-					rightNum--;
-				}else {
-					leftNum--;
-					rightNum++;
-				}
-				cnt--;
+					Xtimes++;
+			} else if(Xtimes % 2 == 0){
+				leftNum--;
+				rightNum++;
+			}else {
+				leftNum++;
+				rightNum--;
 			}
-			
 		}
 		
 		System.out.printf("%d/%d",leftNum,rightNum);
